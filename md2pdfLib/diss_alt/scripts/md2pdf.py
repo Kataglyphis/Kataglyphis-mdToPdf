@@ -2,11 +2,11 @@ import os
 import subprocess
 import sys
 
-input_dir = "./data/book/chapters"
+input_dir = "./data/diss/chapters"
 output_dir = "./data/out"
 
 # Standardwert für den Ausgabedateinamen
-default_output_name = "output.tex"
+default_output_name = "output.pdf"
 output_name = sys.argv[1] if len(sys.argv) > 1 else default_output_name
 
 # Ensure the output directory exists
@@ -26,20 +26,25 @@ input_files = sorted(
 pandoc_cmd = [
     "pandoc",
     *input_files,
-    "--log=data/out/book.json",
+    "--log=data/out/diss.json",
     "--verbose",
-    "--pdf-engine=lualatex",
-    "--biblatex",
-    "--toc",
-    "--number-offset=2",
+    "--pdf-engine",
+    "lualatex",
+    # "--biblatex",
+    "--verbose",
+    "--bibliography",
+    "md2pdfLib/diss/template/Literatur.bib",
+    # "--citeproc",
+    # "--toc",
+    # "--number-offset=2",
     "--number-sections",
-    "--top-level-division=chapter",
+    # "--top-level-division=chapter",
     "--resource-path=.",
     "--metadata-file",
-    "md2pdfLib/book/pandoc/metadata.yml",
+    "md2pdfLib/diss/pandoc/metadata.yml",
     "--highlight-style=md2pdfLib/pygments.theme",
     "--include-in-header",
-    "data/book/latex/main.tex",
+    "data/diss/latex/Diss_Main.tex",
     # "--include-in-header",
     # "main.tex",
     "-o",
